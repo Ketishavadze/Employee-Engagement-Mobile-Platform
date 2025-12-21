@@ -1,4 +1,4 @@
-package com.example.crosscollab.presentation.screen.forgotpassword
+package com.example.crosscollab.presentation.screen.auth.forgotpassword
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
