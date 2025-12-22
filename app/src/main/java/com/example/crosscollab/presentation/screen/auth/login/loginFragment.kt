@@ -1,3 +1,4 @@
+// presentation/screen/auth/login/LoginFragment.kt
 package com.example.crosscollab.presentation.screen.auth.login
 
 import android.view.View
@@ -28,7 +29,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private fun setupListeners() {
         with(binding) {
-            // Text change listeners
+            // Text change listeners to clear errors on typing
             etEmail.addTextChangedListener {
                 viewModel.onEvent(LoginEvent.OnEmailChanged(it.toString()))
             }
@@ -37,7 +38,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
                 viewModel.onEvent(LoginEvent.OnPasswordChanged(it.toString()))
             }
 
-            // Sign In Button
+            // Sign In Button Click
             btnSignIn.setOnClickListener {
                 val email = etEmail.text.toString().trim()
                 val password = etPassword.text.toString().trim()
@@ -72,6 +73,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             btnSignIn.isEnabled = !state.isLoading
             etEmail.isEnabled = !state.isLoading
             etPassword.isEnabled = !state.isLoading
+            tvForgotPassword.isEnabled = !state.isLoading
+            tvSignUp.isEnabled = !state.isLoading
+            cbRememberMe.isEnabled = !state.isLoading
 
             // Field errors
             tilEmail.error = state.emailError
@@ -90,15 +94,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     private fun handleSideEffect(sideEffect: LoginSideEffect) {
         when (sideEffect) {
             is LoginSideEffect.NavigateToHome -> {
-                // TODO: Replace with actual home navigation action
+                // TODO: Add navigation action when HomeFragment is created
                 // findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                showSnackbar("Login successful!", isSuccess = true)
+                showSnackbar("Login successful! Home navigation pending...", isSuccess = true)
             }
             is LoginSideEffect.NavigateToRegister -> {
+                // TODO: Add navigation action in your nav_graph.xml
                 // findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
                 showSnackbar("Navigate to Register - Add navigation action")
             }
             is LoginSideEffect.NavigateToForgotPassword -> {
+                // TODO: Add navigation action in your nav_graph.xml
                 // findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
                 showSnackbar("Navigate to Forgot Password - Add navigation action")
             }
@@ -119,8 +125,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
             .apply {
                 when {
-                    isError -> setBackgroundTint(resources.getColor(R.color.error, null))
-                    isSuccess -> setBackgroundTint(resources.getColor(R.color.success, null))
+                    isError -> {
+                        setBackgroundTint(resources.getColor(R.color.error, null))
+                        setTextColor(resources.getColor(android.R.color.white, null))
+                    }
+                    isSuccess -> {
+                        setBackgroundTint(resources.getColor(R.color.success, null))
+                        setTextColor(resources.getColor(android.R.color.white, null))
+                    }
                 }
             }
             .show()
