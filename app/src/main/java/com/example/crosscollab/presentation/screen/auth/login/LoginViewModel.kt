@@ -20,9 +20,6 @@ class LoginViewModel : ViewModel() {
     private val _effect = Channel<LoginContract.Effect>()
     val effect = _effect.receiveAsFlow()
 
-    /**
-     * Handle UI events
-     */
     fun onEvent(event: LoginContract.Event) {
         when (event) {
             is LoginContract.Event.OnEmailChanged -> {
@@ -73,7 +70,6 @@ class LoginViewModel : ViewModel() {
     private fun signIn() {
         val currentState = _state.value
 
-        // Validate inputs
         val emailError = validateEmail(currentState.email)
         val passwordError = validatePassword(currentState.password)
 
@@ -87,10 +83,8 @@ class LoginViewModel : ViewModel() {
             return
         }
 
-        // Show loading
         _state.update { it.copy(isLoading = true) }
 
-        // Simulate API call
         viewModelScope.launch {
             try {
                 // TODO: Replace with actual authentication API call
@@ -137,9 +131,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Validation methods
-     */
+
     private fun validateForm(email: String, password: String): Boolean {
         return email.isNotBlank() && password.isNotBlank() &&
                 validateEmail(email) == null && validatePassword(password) == null

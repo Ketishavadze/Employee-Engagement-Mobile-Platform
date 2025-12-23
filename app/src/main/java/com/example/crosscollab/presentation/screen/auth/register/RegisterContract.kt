@@ -1,13 +1,9 @@
 package com.example.crosscollab.presentation.screen.auth.register
 
-/**
- * Register Contract defining UI State, Events, and Effects
- */
+
 object RegisterContract {
 
-    /**
-     * UI State for the Register Screen
-     */
+
     data class State(
         val firstName: String = "",
         val lastName: String = "",
@@ -39,9 +35,7 @@ object RegisterContract {
         val isCreateAccountEnabled: Boolean = false
     )
 
-    /**
-     * User Events/Actions from the UI
-     */
+
     sealed class Event {
         data class OnFirstNameChanged(val firstName: String) : Event()
         data class OnLastNameChanged(val lastName: String) : Event()
@@ -64,9 +58,6 @@ object RegisterContract {
         object OnPasswordRequirementsClicked : Event()
     }
 
-    /**
-     * One-time UI Effects
-     */
     sealed class Effect {
         object NavigateToLogin : Effect()
         object NavigateToHome : Effect()

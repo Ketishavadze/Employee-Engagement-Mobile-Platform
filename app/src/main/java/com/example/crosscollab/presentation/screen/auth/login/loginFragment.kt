@@ -37,32 +37,26 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupViews() {
-        // Email text change listener
         binding.etEmail.addTextChangedListener { text ->
             viewModel.onEvent(LoginContract.Event.OnEmailChanged(text.toString()))
         }
 
-        // Password text change listener
         binding.etPassword.addTextChangedListener { text ->
             viewModel.onEvent(LoginContract.Event.OnPasswordChanged(text.toString()))
         }
 
-        // Remember me checkbox
         binding.cbRememberMe.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onEvent(LoginContract.Event.OnRememberMeChanged(isChecked))
         }
 
-        // Sign in button
         binding.btnSignIn.setOnClickListener {
             viewModel.onEvent(LoginContract.Event.OnSignInClicked)
         }
 
-        // Forgot password
         binding.tvForgotPassword.setOnClickListener {
             viewModel.onEvent(LoginContract.Event.OnForgotPasswordClicked)
         }
 
-        // Sign up
         binding.tvSignUp.setOnClickListener {
             viewModel.onEvent(LoginContract.Event.OnSignUpClicked)
         }

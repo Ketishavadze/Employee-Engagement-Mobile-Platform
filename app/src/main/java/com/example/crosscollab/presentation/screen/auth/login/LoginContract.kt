@@ -1,14 +1,8 @@
 package com.example.crosscollab.presentation.screen.auth.login
 
-/**
- * Login Contract defining UI State, Events, and Effects
- * Following MVI/Clean Architecture pattern
- */
+
 object LoginContract {
 
-    /**
-     * UI State for the Login Screen
-     */
     data class State(
         val email: String = "",
         val password: String = "",
@@ -19,9 +13,6 @@ object LoginContract {
         val isSignInEnabled: Boolean = false
     )
 
-    /**
-     * User Events/Actions from the UI
-     */
     sealed class Event {
         data class OnEmailChanged(val email: String) : Event()
         data class OnPasswordChanged(val password: String) : Event()
@@ -31,9 +22,6 @@ object LoginContract {
         object OnSignUpClicked : Event()
     }
 
-    /**
-     * One-time UI Effects (Navigation, Messages, etc.)
-     */
     sealed class Effect {
         object NavigateToHome : Effect()
         object NavigateToForgotPassword : Effect()
