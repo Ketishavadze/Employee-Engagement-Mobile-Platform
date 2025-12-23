@@ -23,8 +23,8 @@
             android:layout_height="140dp"
             android:contentDescription="Event Image"
             android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_event"
-            tools:src="@color/primary" />
+            android:src="@drawable/ic_launcher_background"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +57,6 @@
                     tools:text="18 Dec, 2024 • 10:00 AM" />
             </LinearLayout>
 
-            <!-- Event Title -->
             <TextView
                 android:id="@+id/tvEventTitle"
                 android:layout_width="match_parent"
@@ -70,7 +69,6 @@
                 android:textStyle="bold"
                 tools:text="Team Building Games: A guide to more effective and fun team building" />
 
-            <!-- Location -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +95,6 @@
                     android:textSize="12sp"
                     tools:text="Conference Room A" />
 
-                <!-- Capacity Badge -->
                 <TextView
                     android:id="@+id/tvCapacity"
                     android:layout_width="wrap_content"

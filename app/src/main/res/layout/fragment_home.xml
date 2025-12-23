@@ -133,12 +133,10 @@
                 android:id="@+id/rvUpcomingEvents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
+                android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="2"
-                tools:listitem="@layout/item_event_card_horizontal" />
+                tools:listitem="@layout/item_event_card_vertical" />
 
             <!-- Browse by Category Section -->
             <TextView
@@ -152,264 +150,17 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- Category Grid -->
-            <GridLayout
+            <!-- Category RecyclerView (Grid) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:columnCount="4"
-                android:rowCount="2"
-                android:useDefaultMargins="true">
-
-                <!-- Sports Category -->
-                <LinearLayout
-                    android:id="@+id/llCategorySports"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Sports"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_sports"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Sports"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Music Category -->
-                <LinearLayout
-                    android:id="@+id/llCategoryMusic"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Music"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_music"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Music"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Food Category -->
-                <LinearLayout
-                    android:id="@+id/llCategoryFood"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Food"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_food"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Food"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Art Category -->
-                <LinearLayout
-                    android:id="@+id/llCategoryArt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Art"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_art"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Art"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Tech Talks Category -->
-                <LinearLayout
-                    android:id="@+id/llCategoryTech"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Tech Talks"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_tech"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Tech Talks"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Social Category -->
-                <LinearLayout
-                    android:id="@+id/llCategorySocial"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Social"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_social"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Social"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Wellness Category -->
-                <LinearLayout
-                    android:id="@+id/llCategoryWellness"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Wellness"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_wellness"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Wellness"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <!-- Learning Category -->
-                <LinearLayout
-                    android:id="@+id/llCategoryLearning"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_category_icon"
-                        android:contentDescription="Learning"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_learning"
-                        app:tint="#5669FF" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Learning"
-                        android:textColor="#1F2937"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-            </GridLayout>
+                android:layout_marginHorizontal="12dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="6"
+                tools:listitem="@layout/item_category" />
 
             <!-- Trending Events Section -->
             <LinearLayout
@@ -448,19 +199,45 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:paddingHorizontal="16dp"
-                android:text="Check out what others are viewing"
+                android:text="Popular events with high registration rates."
                 android:textColor="#6B7280"
                 android:textSize="13sp" />
 
-            <!-- Trending Events RecyclerView -->
+            <!-- Trending Events RecyclerView - HORIZONTAL SCROLL -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTrendingEvents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_event_card_horizontal" />
+
+            <!-- Frequently Asked Questions Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="Frequently Asked Questions"
+                android:textColor="#1F2937"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- FAQ RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFaq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="16dp"
                 tools:itemCount="3"
-                tools:listitem="@layout/item_event_card_vertical" />
+                tools:listitem="@layout/item_faq" />
 
         </LinearLayout>
 

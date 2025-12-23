@@ -38,4 +38,5 @@
     <string name="enter_your_email_and_we_ll_send_you_a_link_to_reset_your_password">Enter your email and we\'ll send you a link to reset your password.</string>
     <string name="send_reset_link">Send Reset Link</string>
     <string name="back_to_sign_in">Back to Sign In</string>
+    <string name="new_notification">NEW</string>
 </resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp">
+
+    <!-- Timeline Column (Number + Connector Line) -->
+    <RelativeLayout
+        android:layout_width="40dp"
+        android:layout_height="wrap_content">
+
+        <!-- Timeline Connector Line (Top to Bottom through circle) -->
+        <View
+            android:id="@+id/viewTimelineConnector"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="#D1D5DB" />
+
+        <!-- Number Circle -->
+        <TextView
+            android:id="@+id/tvAgendaNumber"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_agenda_number"
+            android:gravity="center"
+            android:textColor="#6B7280"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="1" />
+
+    </RelativeLayout>
+
+    <!-- Agenda Content -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Time and Title -->
+        <TextView
+            android:id="@+id/tvAgendaTimeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#1F2937"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:text="02:00 PM - Welcome &amp; Introduction" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvAgendaDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="2dp"
+            android:paddingBottom="8dp"
+            android:textColor="#6B7280"
+            android:textSize="14sp"
+            tools:text="Overview of the workshop goals and key topics." />
+
+    </LinearLayout>
+
+</LinearLayout>

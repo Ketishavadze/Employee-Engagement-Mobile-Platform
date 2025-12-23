@@ -1,18 +1,36 @@
 package com.example.crosscollab.presentation.screen.auth.forgotpassword
 
-data class ForgotPasswordState(
-    val isLoading: Boolean = false,
-    val emailError: String? = null
-)
+/**
+ * Forgot Password Contract defining UI State, Events, and Effects
+ */
+object ForgotPasswordContract {
 
-sealed class ForgotPasswordEvent {
-    data class OnEmailChanged(val email: String)
-    data class OnSendResetLinkClicked(val email: String)
-    object OnBackToSignInClicked
-}
+    /**
+     * UI State for the Forgot Password Screen
+     */
+    data class State(
+        val email: String = "",
+        val isLoading: Boolean = false,
+        val emailError: String? = null,
+        val isSendButtonEnabled: Boolean = false
+    )
 
-sealed class ForgotPasswordSideEffect {
-    object NavigateToLogin
-    data class ShowError(val message: String)
-    data class ShowSuccess(val message: String)
+    /**
+     * User Events/Actions from the UI
+     */
+    sealed class Event {
+        data class OnEmailChanged(val email: String) : Event()
+        object OnSendResetLinkClicked : Event()
+        object OnBackToSignInClicked : Event()
+    }
+
+    /**
+     * One-time UI Effects
+     */
+    sealed class Effect {
+        object NavigateToLogin : Effect()
+        object ShowResetLinkSentSuccess : Effect()
+        data class ShowError(val message: String) : Effect()
+        data class ShowToast(val message: String) : Effect()
+    }
 }
