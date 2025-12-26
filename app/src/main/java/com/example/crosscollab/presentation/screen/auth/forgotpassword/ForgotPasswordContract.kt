@@ -3,26 +3,20 @@ package com.example.crosscollab.presentation.screen.auth.forgotpassword
 
 object ForgotPasswordContract {
 
-
     data class State(
         val email: String = "",
         val isLoading: Boolean = false,
-        val emailError: String? = null,
-        val isSendButtonEnabled: Boolean = false
+        val error: String? = null
     )
 
-
-    sealed class Event {
-        data class OnEmailChanged(val email: String) : Event()
-        object OnSendResetLinkClicked : Event()
-        object OnBackToSignInClicked : Event()
+    sealed interface Event {
+        data class EmailChanged(val value: String) : Event
+        object SendResetLinkClicked : Event
+        object BackToSignInClicked : Event
     }
 
-
-    sealed class Effect {
-        object NavigateToLogin : Effect()
-        object ShowResetLinkSentSuccess : Effect()
-        data class ShowError(val message: String) : Effect()
-        data class ShowToast(val message: String) : Effect()
+    sealed interface Effect {
+        object NavigateBackToSignIn : Effect
+        data class ShowToast(val message: String) : Effect
     }
 }

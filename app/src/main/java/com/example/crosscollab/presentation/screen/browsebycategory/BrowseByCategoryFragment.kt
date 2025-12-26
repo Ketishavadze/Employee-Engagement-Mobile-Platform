@@ -1,60 +1,67 @@
 package com.example.crosscollab.presentation.screen.browsebycategory
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.crosscollab.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.example.crosscollab.databinding.FragmentBrowseByCategoryBinding
+import com.example.crosscollab.presentation.common.BaseFragment
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BrowseByCategoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BrowseByCategoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+class BrowseByCategoryFragment :
+    BaseFragment<FragmentBrowseByCategoryBinding>(
+        FragmentBrowseByCategoryBinding::inflate
+    ) {
+
+    private val viewModel: BrowseByCategoryViewModel by viewModels()
+
+    private val adapter = BrowseEventsAdapter { eventId ->
+        viewModel.onEvent(
+            BrowseByCategoryContract.Event.EventClicked(eventId)
+        )
+    }
+
+    override fun start() {
+
+        val categoryId = requireArguments().getInt("categoryId")
+        val title = requireArguments().getString("categoryTitle") ?: ""
+
+        binding.rvEvents.adapter = adapter
+
+        binding.btnBack.setOnClickListener {
+            viewModel.onEvent(BrowseByCategoryContract.Event.BackClicked)
+        }
+
+        viewModel.onEvent(
+            BrowseByCategoryContract.Event.Load(categoryId, title)
+        )
+
+        observeState()
+        observeEffect()
+    }
+
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.state.collect { state ->
+                binding.tvTitle.text = state.title
+                adapter.submitList(state.events)
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_browse_by_category, container, false)
-    }
+    private fun observeEffect() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sideEffect.collect { effect ->
+                when (effect) {
+                    BrowseByCategoryContract.Effect.NavigateBack ->
+                        requireActivity()
+                            .onBackPressedDispatcher
+                            .onBackPressed()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BrowseByCategoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BrowseByCategoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    is BrowseByCategoryContract.Effect.NavigateToDetails -> {
+                        // navigate to EventDetailsFragment
+                    }
                 }
             }
+        }
     }
 }

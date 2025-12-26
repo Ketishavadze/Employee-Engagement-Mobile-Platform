@@ -1,4 +1,9 @@
 package com.example.crosscollab.domain.model
 
-class User {
-}
+
+data class User(
+    val id: Int,
+    val firstName: String,
+    val lastName: String,
+    val email: String
+)

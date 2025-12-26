@@ -20,7 +20,6 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Category Icon -->
         <ImageView
             android:id="@+id/ivCategoryIcon"
             android:layout_width="48dp"
@@ -29,7 +28,6 @@
             app:tint="#4B5563"
             tools:src="@drawable/ic_sports" />
 
-        <!-- Category Name -->
         <TextView
             android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
@@ -43,7 +41,6 @@
             android:ellipsize="end"
             tools:text="Team Building" />
 
-        <!-- Event Count -->
         <TextView
             android:id="@+id/tvEventCount"
             android:layout_width="wrap_content"

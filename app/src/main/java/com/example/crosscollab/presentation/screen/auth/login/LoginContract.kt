@@ -6,27 +6,25 @@ object LoginContract {
     data class State(
         val email: String = "",
         val password: String = "",
-        val isLoading: Boolean = false,
-        val emailError: String? = null,
-        val passwordError: String? = null,
         val rememberMe: Boolean = false,
-        val isSignInEnabled: Boolean = false
+        val isLoading: Boolean = false,
+        val error: String? = null
     )
 
-    sealed class Event {
-        data class OnEmailChanged(val email: String) : Event()
-        data class OnPasswordChanged(val password: String) : Event()
-        data class OnRememberMeChanged(val checked: Boolean) : Event()
-        object OnSignInClicked : Event()
-        object OnForgotPasswordClicked : Event()
-        object OnSignUpClicked : Event()
+    sealed interface Event {
+        data class EmailChanged(val value: String) : Event
+        data class PasswordChanged(val value: String) : Event
+        data class RememberMeChanged(val checked: Boolean) : Event
+
+        object SignInClicked : Event
+        object ForgotPasswordClicked : Event
+        object SignUpClicked : Event
     }
 
-    sealed class Effect {
-        object NavigateToHome : Effect()
-        object NavigateToForgotPassword : Effect()
-        object NavigateToSignUp : Effect()
-        data class ShowError(val message: String) : Effect()
-        data class ShowToast(val message: String) : Effect()
+    sealed interface Effect {
+        object NavigateToHome : Effect
+        object NavigateToRegister : Effect
+        object NavigateToForgotPassword : Effect
+        data class ShowToast(val message: String) : Effect
     }
 }

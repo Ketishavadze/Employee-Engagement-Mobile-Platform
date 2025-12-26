@@ -1,15 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.crosscollab.presentation.screen.auth.login.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.crosscollab.presentation.screen.auth.forgotpassword.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.crosscollab.presentation.screen.auth.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.crosscollab.presentation.screen.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_browseByCategoryFragment"
+            app:destination="@id/browseByCategoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myEventsFragment"
+            app:destination="@id/myEventsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/browseByCategoryFragment"
+        android:name="com.example.crosscollab.presentation.screen.browsebycategory.BrowseByCategoryFragment"
+        android:label="BrowseByCategoryFragment" />
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.example.crosscollab.presentation.screen.eventdetails.EventDetailsFragment"
+        android:label="EventDetailsFragment" />
+    <fragment
+        android:id="@+id/myEventsFragment"
+        android:name="com.example.crosscollab.presentation.screen.myevents.MyEventsFragment"
+        android:label="MyEventsFragment" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="NotificationsFragment"
+        android:label="NotificationsFragment" />
 </navigation>

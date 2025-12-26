@@ -3,6 +3,8 @@ package com.example.crosscollab.presentation.screen.auth.forgotpassword
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crosscollab.domain.usecase.auth.ForgotPasswordUseCase
+import com.example.crosscollab.presentation.common.BaseViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,94 +14,58 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 
-class ForgotPasswordViewModel : ViewModel() {
+class ForgotPasswordViewModel(
+    private val forgotPasswordUseCase: ForgotPasswordUseCase
+) : BaseViewModel<
+        ForgotPasswordContract.State,
+        ForgotPasswordContract.Event,
+        ForgotPasswordContract.Effect
+        >(ForgotPasswordContract.State()) {
 
-    private val _state = MutableStateFlow(ForgotPasswordContract.State())
-    val state: StateFlow<ForgotPasswordContract.State> = _state.asStateFlow()
-
-    private val _effect = Channel<ForgotPasswordContract.Effect>()
-    val effect = _effect.receiveAsFlow()
-
-    /**
-     * Handle UI events
-     */
-    fun onEvent(event: ForgotPasswordContract.Event) {
+    override fun onEvent(event: ForgotPasswordContract.Event) {
         when (event) {
-            is ForgotPasswordContract.Event.OnEmailChanged -> {
-                updateEmail(event.email)
-            }
-            ForgotPasswordContract.Event.OnSendResetLinkClicked -> {
+
+            is ForgotPasswordContract.Event.EmailChanged ->
+                updateState { it.copy(email = event.value) }
+
+            ForgotPasswordContract.Event.SendResetLinkClicked ->
                 sendResetLink()
-            }
-            ForgotPasswordContract.Event.OnBackToSignInClicked -> {
-                navigateToLogin()
-            }
+
+            ForgotPasswordContract.Event.BackToSignInClicked ->
+                emitSideEffect(ForgotPasswordContract.Effect.NavigateBackToSignIn)
         }
     }
 
-    private fun updateEmail(email: String) {
-        _state.update { currentState ->
-            currentState.copy(
-                email = email,
-                emailError = null,
-                isSendButtonEnabled = validateEmail(email) == null
+    private fun sendResetLink() = viewModelScope.launch {
+        val email = state.value.email
+
+        if (email.isBlank()) {
+            emitSideEffect(
+                ForgotPasswordContract.Effect.ShowToast(
+                    "Please enter your email"
+                )
+            )
+            return@launch
+        }
+
+        updateState { it.copy(isLoading = true) }
+
+        runCatching {
+            forgotPasswordUseCase(email)
+        }.onSuccess {
+            emitSideEffect(
+                ForgotPasswordContract.Effect.ShowToast(
+                    "Reset link sent to your email"
+                )
+            )
+        }.onFailure {
+            emitSideEffect(
+                ForgotPasswordContract.Effect.ShowToast(
+                    it.message ?: "Something went wrong"
+                )
             )
         }
-    }
 
-    private fun sendResetLink() {
-        val currentState = _state.value
-
-        // Validate email
-        val emailError = validateEmail(currentState.email)
-        if (emailError != null) {
-            _state.update { it.copy(emailError = emailError) }
-            return
-        }
-
-        // Show loading
-        _state.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch {
-            try {
-                // TODO: Replace with actual password reset API call
-                // val result = authRepository.sendPasswordResetLink(currentState.email)
-
-                // Simulate network delay
-                delay(2000)
-
-                _state.update { it.copy(isLoading = false) }
-                _effect.send(ForgotPasswordContract.Effect.ShowResetLinkSentSuccess)
-
-                // Optionally navigate back to login after showing success
-                delay(1500)
-                _effect.send(ForgotPasswordContract.Effect.NavigateToLogin)
-            } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false) }
-                _effect.send(
-                    ForgotPasswordContract.Effect.ShowError(
-                        e.message ?: "Failed to send reset link. Please try again."
-                    )
-                )
-            }
-        }
-    }
-
-    private fun navigateToLogin() {
-        viewModelScope.launch {
-            _effect.send(ForgotPasswordContract.Effect.NavigateToLogin)
-        }
-    }
-
-    /**
-     * Validation methods
-     */
-    private fun validateEmail(email: String): String? {
-        return when {
-            email.isBlank() -> "Email is required"
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
-                "Please enter a valid email address"
-            else -> null
-        }
+        updateState { it.copy(isLoading = false) }
     }
 }

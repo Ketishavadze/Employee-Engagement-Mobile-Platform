@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- App Bar -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -14,18 +13,16 @@
         android:background="@android:color/white"
         app:elevation="0dp">
 
-        <!-- Toolbar -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- Title -->
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Events"
+                android:text="@string/my_events"
                 android:textColor="#1F2937"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -34,15 +31,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- List/Calendar Toggle -->
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvListView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -52,12 +48,12 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:paddingVertical="8dp"
-                android:text="List"
+                android:text="@string/list"
                 android:textColor="#1F2937"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCalendarView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -67,13 +63,12 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:paddingVertical="8dp"
-                android:text="Calendar"
+                android:text="@string/calendar"
                 android:textColor="#9CA3AF"
                 android:textSize="14sp" />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <!-- View Indicator -->
         <View
             android:id="@+id/viewIndicator"
             android:layout_width="0dp"
@@ -82,7 +77,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Content Container -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -94,27 +88,24 @@
             android:layout_height="wrap_content"
             android:paddingBottom="80dp">
 
-            <!-- List View -->
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <!-- Next Upcoming Event Header -->
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#F9FAFB"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="8dp"
-                    android:text="Next Upcoming Event"
+                    android:text="@string/next_upcoming_event"
                     android:textColor="#6B7280"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
-                <!-- Next Event Card (Featured) -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvNextEvent"
                     android:layout_width="match_parent"
@@ -125,7 +116,6 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/item_my_event_featured" />
 
-                <!-- Map Preview (Optional) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvMapPreview"
                     android:layout_width="match_parent"
@@ -141,13 +131,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Map Preview of Event Location"
+                        android:text="@string/map_preview_of_event_location"
                         android:textColor="#6B7280"
                         android:textSize="14sp" />
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Other Events RecyclerView -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMyEvents"
                     android:layout_width="match_parent"
@@ -158,10 +147,9 @@
                     tools:itemCount="2"
                     tools:listitem="@layout/item_my_event_card" />
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <!-- Calendar View -->
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llCalendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,19 +157,17 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <!-- Next Upcoming Event Header (Also in Calendar View) -->
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#F9FAFB"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="8dp"
-                    android:text="Next Upcoming Event"
+                    android:text="@string/next_upcoming_event"
                     android:textColor="#6B7280"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
-                <!-- Next Event Card (Featured) in Calendar View -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvNextEventCalendar"
                     android:layout_width="match_parent"
@@ -193,7 +179,6 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/item_my_event_featured" />
 
-                <!-- Map Preview in Calendar View (Optional) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cvMapPreviewCalendar"
                     android:layout_width="match_parent"
@@ -206,7 +191,7 @@
                     app:strokeColor="#E5E7EB"
                     app:strokeWidth="1dp">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -216,7 +201,6 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Calendar Widget -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -227,20 +211,19 @@
                     app:strokeColor="#E5E7EB"
                     app:strokeWidth="1dp">
 
-                    <LinearLayout
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="16dp">
 
-                        <!-- Month Navigation -->
-                        <LinearLayout
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <ImageButton
+                            <androidx.appcompat.widget.AppCompatImageButton
                                 android:id="@+id/btnPreviousMonth"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
@@ -249,7 +232,7 @@
                                 android:src="@drawable/ic_chevron_left"
                                 app:tint="#1F2937" />
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvMonthYear"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -260,7 +243,7 @@
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
-                            <ImageButton
+                            <androidx.appcompat.widget.AppCompatImageButton
                                 android:id="@+id/btnNextMonth"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
@@ -269,22 +252,19 @@
                                 android:src="@drawable/ic_chevron_right"
                                 app:tint="#1F2937" />
 
-                        </LinearLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
-                        <!-- Calendar Grid (7x6) -->
-                        <!-- Using CalendarView or Custom Implementation -->
                         <CalendarView
                             android:id="@+id/calendarView"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
                             android:layout_marginTop="8dp" />
 
-                    </LinearLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Events on Selected Date Header -->
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEventsOnDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -296,7 +276,6 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <!-- Events on Selected Date RecyclerView -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCalendarEvents"
                     android:layout_width="match_parent"
@@ -308,13 +287,12 @@
                     tools:itemCount="2"
                     tools:listitem="@layout/item_calendar_event" />
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

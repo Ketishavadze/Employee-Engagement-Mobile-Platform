@@ -3,89 +3,42 @@ package com.example.crosscollab.presentation.screen.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.RotateAnimation
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.crosscollab.R
+import com.example.crosscollab.databinding.ItemFaqBinding
+import com.example.crosscollab.domain.model.Faq
 
-class FaqAdapter(
-    private val onFaqClick: (Faq) -> Unit
-) : ListAdapter<Faq, FaqAdapter.FaqViewHolder>(FaqDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FaqViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_faq, parent, false)
-        return FaqViewHolder(view)
-    }
+class FaqAdapter :
+    ListAdapter<Faq, FaqAdapter.VH>(DIFF) {
 
-    override fun onBindViewHolder(holder: FaqViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
+    override fun onCreateViewHolder(p: ViewGroup, v: Int) =
+        VH(ItemFaqBinding.inflate(
+            LayoutInflater.from(p.context), p, false
+        ))
 
-    inner class FaqViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvQuestion: TextView = itemView.findViewById(R.id.tvQuestion)
-        private val tvAnswer: TextView = itemView.findViewById(R.id.tvAnswer)
-        private val ivExpandIcon: ImageView = itemView.findViewById(R.id.ivExpandIcon)
+    override fun onBindViewHolder(h: VH, p: Int) = h.bind(getItem(p))
 
-        fun bind(faq: Faq) {
-            tvQuestion.text = faq.question
-            tvAnswer.text = faq.answer
+    inner class VH(private val b: ItemFaqBinding) :
+        RecyclerView.ViewHolder(b.root) {
 
-            // Show/hide answer based on expanded state
-            tvAnswer.visibility = if (faq.isExpanded) View.VISIBLE else View.GONE
+        fun bind(item: Faq) {
+            b.tvQuestion.text = item.question
+            b.tvAnswer.text = item.answer
 
-            // Rotate icon based on expanded state with animation
-            val rotation = if (faq.isExpanded) 180f else 0f
-            ivExpandIcon.rotation = rotation
-
-            itemView.setOnClickListener {
-                // Toggle expanded state
-                faq.isExpanded = !faq.isExpanded
-
-                // Animate the icon rotation
-                animateIconRotation(ivExpandIcon, !faq.isExpanded)
-
-                // Update visibility with animation
-                if (faq.isExpanded) {
-                    tvAnswer.visibility = View.VISIBLE
-                } else {
-                    tvAnswer.visibility = View.GONE
-                }
-
-                // Notify adapter to update the item
-                notifyItemChanged(bindingAdapterPosition)
-
-                // Callback
-                onFaqClick(faq)
+            b.root.setOnClickListener {
+                b.tvAnswer.visibility =
+                    if (b.tvAnswer.visibility == View.GONE)
+                        View.VISIBLE else View.GONE
             }
         }
-
-        private fun animateIconRotation(view: ImageView, collapse: Boolean) {
-            val fromRotation = if (collapse) 180f else 0f
-            val toRotation = if (collapse) 0f else 180f
-
-            val rotate = RotateAnimation(
-                fromRotation, toRotation,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f
-            )
-            rotate.duration = 200
-            rotate.fillAfter = true
-            view.startAnimation(rotate)
-        }
     }
 
-    private class FaqDiffCallback : DiffUtil.ItemCallback<Faq>() {
-        override fun areItemsTheSame(oldItem: Faq, newItem: Faq): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Faq, newItem: Faq): Boolean {
-            return oldItem == newItem
+    companion object {
+        val DIFF = object : DiffUtil.ItemCallback<Faq>() {
+            override fun areItemsTheSame(a: Faq, b: Faq) = a.id == b.id
+            override fun areContentsTheSame(a: Faq, b: Faq) = a == b
         }
     }
 }

@@ -1,4 +1,7 @@
 package com.example.crosscollab.domain.model
 
-class LoginRequest {
-}
+
+data class LoginRequest(
+    val email: String,
+    val password: String
+)

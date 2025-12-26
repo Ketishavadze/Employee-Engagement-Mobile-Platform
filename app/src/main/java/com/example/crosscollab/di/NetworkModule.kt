@@ -1,0 +1,22 @@
+package com.example.crosscollab.di
+
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit =
+        Retrofit.Builder()
+            .baseUrl("http://35.205.108.13:5001/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+}

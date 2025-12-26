@@ -1,138 +1,63 @@
 package com.example.crosscollab.presentation.screen.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.crosscollab.databinding.FragmentHomeBinding
-import kotlinx.coroutines.launch
+import com.example.crosscollab.presentation.common.BaseFragment
 
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment :
+    BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private lateinit var upcomingEventsAdapter: UpcomingEventsAdapter
-    private lateinit var trendingEventsAdapter: TrendingEventsAdapter
-    private lateinit var categoriesAdapter: CategoriesAdapter
-    private lateinit var faqAdapter: FaqAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+    private val upcomingAdapter = UpcomingEventsAdapter {
+        viewModel.onEvent(HomeContract.Event.EventClicked(it))
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupRecyclerViews()
-        setupClickListeners()
-        observeViewModel()
-
-        // Load data
-        viewModel.loadHomeData()
+    private val trendingAdapter = TrendingEventsAdapter {
+        viewModel.onEvent(HomeContract.Event.EventClicked(it))
     }
-
-    private fun setupRecyclerViews() {
-        // Upcoming Events - Vertical
-        upcomingEventsAdapter = UpcomingEventsAdapter { event ->
-            // Handle event click
-            // Navigate to event details
-        }
-        binding.rvUpcomingEvents.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = upcomingEventsAdapter
-        }
-
-        // Trending Events - Horizontal
-        trendingEventsAdapter = TrendingEventsAdapter { event ->
-            // Handle event click
-            // Navigate to event details
-        }
-        binding.rvTrendingEvents.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-            adapter = trendingEventsAdapter
-        }
-
-        // Categories - Grid
-        categoriesAdapter = CategoriesAdapter { category ->
-            // Handle category click
-            // Navigate to category events
-        }
-        binding.rvCategories.apply {
-            adapter = categoriesAdapter
-        }
-
-        // FAQ
-        faqAdapter = FaqAdapter { faq ->
-            // Handle FAQ click - expand/collapse
-        }
-        binding.rvFaq.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = faqAdapter
-        }
+    private val categoryAdapter = CategoryAdapter {
+        viewModel.onEvent(HomeContract.Event.CategoryClicked(it))
     }
+    private val faqAdapter = FaqAdapter()
 
-    private fun setupClickListeners() {
-        binding.ivSearch.setOnClickListener {
-            // Handle search click
-        }
+    override fun start() {
 
-        binding.ivNotification.setOnClickListener {
-            // Handle notification click
-        }
+        binding.rvUpcomingEvents.adapter = upcomingAdapter
+        binding.rvTrendingEvents.adapter = trendingAdapter
+        binding.rvCategories.adapter = categoryAdapter
+        binding.rvFaq.adapter = faqAdapter
 
         binding.tvSeeAllUpcoming.setOnClickListener {
-            // Navigate to all upcoming events
+            viewModel.onEvent(HomeContract.Event.SeeAllUpcoming)
         }
 
         binding.tvSeeAllTrending.setOnClickListener {
-            // Navigate to all trending events
+            viewModel.onEvent(HomeContract.Event.SeeAllTrending)
         }
+
+        viewModel.onEvent(HomeContract.Event.LoadHome)
+
+        observeState()
+        observeEffect()
     }
 
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.upcomingEvents.collect { events ->
-                upcomingEventsAdapter.submitList(events)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.trendingEvents.collect { events ->
-                trendingEventsAdapter.submitList(events)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.categories.collect { categories ->
-                categoriesAdapter.submitList(categories)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.faqs.collect { faqs ->
-                faqAdapter.submitList(faqs)
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.state.collect { state ->
+                upcomingAdapter.submitList(state.upcomingEvents)
+                trendingAdapter.submitList(state.trendingEvents)
+                categoryAdapter.submitList(state.categories)
+                faqAdapter.submitList(state.faqs)
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun observeEffect() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.sideEffect.collect {
+                // navigation here
+            }
+        }
     }
 }

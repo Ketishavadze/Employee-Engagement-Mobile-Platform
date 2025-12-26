@@ -39,4 +39,9 @@
     <string name="send_reset_link">Send Reset Link</string>
     <string name="back_to_sign_in">Back to Sign In</string>
     <string name="new_notification">NEW</string>
+    <string name="my_events">My Events</string>
+    <string name="list">List</string>
+    <string name="calendar">Calendar</string>
+    <string name="next_upcoming_event">Next Upcoming Event</string>
+    <string name="map_preview_of_event_location">Map Preview of Event Location</string>
 </resources>

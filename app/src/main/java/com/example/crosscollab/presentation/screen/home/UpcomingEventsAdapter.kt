@@ -1,78 +1,41 @@
 package com.example.crosscollab.presentation.screen.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.crosscollab.R
+import com.example.crosscollab.databinding.ItemEventCardVerticalBinding
+import com.example.crosscollab.domain.model.UpcomingEvent
 
 class UpcomingEventsAdapter(
-    private val onEventClick: (Event) -> Unit
-) : ListAdapter<Event, UpcomingEventsAdapter.EventViewHolder>(EventDiffCallback()) {
+    private val onClick: (Int) -> Unit
+) : ListAdapter<UpcomingEvent, UpcomingEventsAdapter.VH>(DIFF) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_event_card_vertical, parent, false)
-        return EventViewHolder(view)
-    }
+    override fun onCreateViewHolder(p: ViewGroup, v: Int) =
+        VH(ItemEventCardVerticalBinding.inflate(
+            LayoutInflater.from(p.context), p, false
+        ))
 
-    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
+    override fun onBindViewHolder(h: VH, p: Int) = h.bind(getItem(p))
 
-    inner class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvDay: TextView = itemView.findViewById(R.id.tvDay)
-        private val tvMonth: TextView = itemView.findViewById(R.id.tvMonth)
-        private val tvEventTitle: TextView = itemView.findViewById(R.id.tvEventTitle)
-        private val tvTime: TextView = itemView.findViewById(R.id.tvTime)
-        private val tvLocation: TextView = itemView.findViewById(R.id.tvLocation)
-        private val tvViewDetails: TextView = itemView.findViewById(R.id.tvViewDetails)
+    inner class VH(private val b: ItemEventCardVerticalBinding) :
+        RecyclerView.ViewHolder(b.root) {
 
-        fun bind(event: Event) {
-            tvEventTitle.text = event.title
-
-            // Parse and set date components
-            // Assuming event.date format is "Jan 15, 2025 • 10:00 AM"
-            val dateParts = event.date.split("•")
-            val dateStr = dateParts.getOrNull(0)?.trim() ?: event.date
-            val timeStr = dateParts.getOrNull(1)?.trim() ?: ""
-
-            // Extract day and month from date string (e.g., "Jan 15, 2025")
-            val dateComponents = dateStr.split(" ")
-            if (dateComponents.size >= 2) {
-                val day = dateComponents[1].replace(",", "")
-                val month = dateComponents[0]
-                tvDay.text = day
-                tvMonth.text = month
-            }
-
-            // Set time
-            tvTime.text = timeStr
-
-            // Set location
-            tvLocation.text = event.location
-
-            itemView.setOnClickListener {
-                onEventClick(event)
-            }
-
-            tvViewDetails.setOnClickListener {
-                onEventClick(event)
-            }
+        fun bind(item: UpcomingEvent) {
+            b.tvDay.text = item.day
+            b.tvMonth.text = item.month
+            b.tvEventTitle.text = item.title
+            b.tvTime.text = item.time
+            b.tvLocation.text = item.location
+            b.root.setOnClickListener { onClick(item.id) }
         }
     }
 
-    private class EventDiffCallback : DiffUtil.ItemCallback<Event>() {
-        override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem == newItem
+    companion object {
+        val DIFF = object : DiffUtil.ItemCallback<UpcomingEvent>() {
+            override fun areItemsTheSame(a: UpcomingEvent, b: UpcomingEvent) = a.id == b.id
+            override fun areContentsTheSame(a: UpcomingEvent, b: UpcomingEvent) = a == b
         }
     }
 }

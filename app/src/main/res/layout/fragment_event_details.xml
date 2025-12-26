@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- App Bar with Image -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -20,7 +19,6 @@
             app:contentScrim="@android:color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <!-- Event Banner Image -->
             <ImageView
                 android:id="@+id/ivEventBanner"
                 android:layout_width="match_parent"
@@ -31,7 +29,6 @@
                 app:layout_collapseMode="parallax"
                 tools:src="@color/gray_300" />
 
-            <!-- Placeholder Text on Image -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +37,6 @@
                 android:textColor="#6B7280"
                 android:textSize="16sp" />
 
-            <!-- Toolbar -->
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -54,7 +50,6 @@
                 app:titleTextColor="#1F2937"
                 app:titleMarginStart="16dp">
 
-                <!-- Three-dot menu icon -->
                 <ImageView
                     android:id="@+id/ivMenuIcon"
                     android:layout_width="24dp"
@@ -71,7 +66,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -84,7 +78,6 @@
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
-            <!-- Event Type Badge -->
             <TextView
                 android:id="@+id/tvEventType"
                 android:layout_width="wrap_content"
@@ -99,7 +92,6 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <!-- Event Title -->
             <TextView
                 android:id="@+id/tvEventTitle"
                 android:layout_width="match_parent"
@@ -111,7 +103,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- Event Details (Date, Time, Location, Capacity) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +110,6 @@
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
-                <!-- Date -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -144,7 +134,6 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Time -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -169,7 +158,6 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Location -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -194,7 +182,6 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Capacity -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -220,7 +207,6 @@
 
             </LinearLayout>
 
-            <!-- Register Now Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
@@ -235,7 +221,6 @@
                 android:textStyle="bold"
                 app:cornerRadius="8dp" />
 
-            <!-- Registration Info -->
             <TextView
                 android:id="@+id/tvRegistrationInfo"
                 android:layout_width="match_parent"
@@ -247,7 +232,6 @@
                 android:textColor="#6B7280"
                 android:textSize="12sp" />
 
-            <!-- About this event Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -269,7 +253,6 @@
                 android:textColor="#4B5563"
                 android:textSize="14sp" />
 
-            <!-- Agenda Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -280,7 +263,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- Agenda RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvAgenda"
                 android:layout_width="match_parent"
@@ -291,7 +273,6 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/item_agenda" />
 
-            <!-- Featured Speakers Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -302,7 +283,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- Speakers RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSpeakers"
                 android:layout_width="match_parent"
@@ -317,7 +297,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

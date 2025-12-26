@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="30dp"
     tools:context=".presentation.screen.auth.register.RegisterFragment">
@@ -217,6 +218,7 @@
                     android:maxLength="1"
                     android:textSize="18sp" />
             </LinearLayout>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCodeExpires"
                 style="@style/TextViewLabel"
@@ -225,6 +227,7 @@
                 android:textColor="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/llOtpContainer" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvExpireTime"
                 style="@style/TextViewLabel"
@@ -234,6 +237,7 @@
                 android:textColor="@color/gray"
                 app:layout_constraintStart_toEndOf="@id/tvCodeExpires"
                 app:layout_constraintTop_toBottomOf="@id/llOtpContainer" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvBtnResendCode"
                 style="@style/TextViewLabel"
@@ -277,12 +281,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tiDepartment" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etPassword"
-                style="@style/EditTextStyle"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:hint="@string/create_password"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tvPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_et"
+                    android:inputType="textPassword"
+                    android:padding="15dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icRequiredPassword"
@@ -300,7 +318,7 @@
                 android:text="@string/password_required_title"
                 android:textColor="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvConfirmPassword"
@@ -309,12 +327,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvPasswordSubtitle" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/etConfirmPassword"
-                style="@style/EditTextStyle"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:hint="@string/confirm_password"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_et"
+                    android:inputType="textPassword"
+                    android:padding="15dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icRequiredConfirmPass"
@@ -334,7 +366,7 @@
                 android:textColor="@color/black"
                 app:buttonTint="@color/gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tilConfirmPassword" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCreateAccount"
